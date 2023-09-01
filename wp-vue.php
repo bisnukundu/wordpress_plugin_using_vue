@@ -35,9 +35,9 @@ class WPVue
     {
         $pluginUrl = plugin_dir_url(__FILE__);
 
-        wp_enqueue_script('wp-vue-core', '//localhost:5173/src/main.js', [], time(), true);
-        // wp_enqueue_script('wp-vue-core', plugin_dir_url(__FILE__) . '/dist/assets/index-4a0a00bf.js', [], time(), true);
-        // wp_enqueue_style('wp-vue-core', plugin_dir_url(__FILE__) . '/dist/assets/index-fa54a91b.css', [], time());
+        // wp_enqueue_script('wp-vue-core', '//localhost:5173/src/main.js', [], time(), true);
+        wp_enqueue_script('wp-vue-core', plugin_dir_url(__FILE__) . '/dist/assets/index-a6bb0e59.js', [], time(), true);
+        wp_enqueue_style('wp-vue-core', plugin_dir_url(__FILE__) . '/dist/assets/index-66c967a1.css', [], time());
         wp_localize_script('wp-vue-core', 'wpvue', [
             'url' => $pluginUrl,
         ]);
@@ -70,16 +70,58 @@ function submit_multi_step_form()
 
     $admin_email = get_option('admin_email');
     $subject = 'Hello, Admin!';
-    $message = 'This is a message sent to the admin email address.';
+    $message = '<html>
+<head></head>
+<body style="font-family: Arial, sans-serif;">
+    <h2 style="text-align: center;">Email Contents</h2>
+    <table style="border-collapse: collapse; width: 50%; margin: 0 auto;">
+        <tr>
+            <th style="border: 1px solid #dddddd; text-align: left; padding: 8px; background-color: #f0f0f0;">Field</th>
+            <th style="border: 1px solid #dddddd; text-align: left; padding: 8px; background-color: #f0f0f0;">Value</th>
+        </tr>';
+
+    $keys = [
+		'location',
+        'country_code',
+        'phone',
+        'house_rate',
+        'address_select',
+        'Ingresos_netos_one',
+        'Ingresos_netos_one_two',
+        'Ingresos_netos_two',
+        'Ingresos_netos_two_two',
+        'address',
+        'address_select_2',
+        'country_code_two',
+        'phone_two',
+        'email',
+        'name',
+        'radio_one',
+        'saving_amout',
+		'saving_parcentage',
+        
+    ];
+
+    foreach ($keys as $key) {
+        $message .= '<tr>';
+        $message .= '<td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">' . $key . '</td>';
+        $message .= '<td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">' . (isset($_POST[$key]) ? $_POST[$key] : '') . '</td>';
+        $message .= '</tr>';
+    }
+
+    $message .= '</table>
+</body>
+</html>';
+
     $headers = array('Content-Type: text/html; charset=UTF-8');
 
-    $sent = wp_mail($to, $subject, $message, $headers);
+    $sent = wp_mail($admin_email, $subject, $message, $headers);
 
     if ($sent) {
 
-        return wp_send_json_success($sent, 200);
+        return wp_send_json_success($response, 200);
     } else {
-        return wp_send_json_success($sent, 400);
+        return wp_send_json_success($sent, 404);
     }
 
 };
