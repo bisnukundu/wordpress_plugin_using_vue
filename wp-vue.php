@@ -56,3 +56,30 @@ function my_vue_shortcode()
 }
 
 add_shortcode('custom_form_bisnu', 'my_vue_shortcode');
+
+add_action('wp_ajax_nopriv_load_more_product', 'submit_multi_step_form');
+add_action('wp_ajax_load_more_product', 'submit_multi_step_form');
+
+function submit_multi_step_form()
+{
+    $response = array(
+        'message' => $_POST,
+    );
+
+    // return wp_send_json($response);
+
+    $admin_email = get_option('admin_email');
+    $subject = 'Hello, Admin!';
+    $message = 'This is a message sent to the admin email address.';
+    $headers = array('Content-Type: text/html; charset=UTF-8');
+
+    $sent = wp_mail($to, $subject, $message, $headers);
+
+    if ($sent) {
+
+        return wp_send_json_success($sent, 200);
+    } else {
+        return wp_send_json_success($sent, 400);
+    }
+
+};

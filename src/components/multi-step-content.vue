@@ -17,14 +17,34 @@ const form_data = reactive({
   Ingresos_netos_two_two: '',
 })
 
-const submit_form = () => {
-  // console.log('working..')
-  console.log(form_data);
+const submit_form = async () => {
+  
+
+  const response = await fetch('/wp-admin/admin-ajax.php', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: new URLSearchParams({
+      action: 'load_more_product',
+      ...form_data
+    }),
+  });
+
+  if (response.ok) {
+      const data = await response.json(); // Parse response as JSON
+      console.log(data)
+    } else {
+      console.error('AJAX request failed');
+    }
+ 
+
 }
 
-const computed_saving = computed(() => {
-  return form_data.saving_amout / form_data.house_rate * 100
-})
+
+  const computed_saving = computed(() => {
+    return form_data.saving_amout / form_data.house_rate * 100
+  })
 
 
 </script>
