@@ -373,10 +373,10 @@ const formattedSavingAmount = computed(() => {
   <FormKit type="step" name="5">
     <h4>Sobre la hipoteca</h4>
     <p>Cuåntos ahorros vas a aportar?</p>
-    <p>{{ computed_saving.toFixed() }}%</p>
 
     <div class="saving_amount">
       <div class="saving_amount_format">
+        <p class="saving_parcengate">{{ computed_saving.toFixed() }}%</p>
         <input type="text" :value="formattedSavingAmount" />
       </div>
       <div class="saving_amount_not_format">
@@ -424,21 +424,27 @@ const formattedSavingAmount = computed(() => {
             'Otra',
           ]"
         />
-
-        <FormKit
-          label="Ingresos netos"
-          v-model="form_data.Ingresos_netos_one"
-          type="number"
-        />
-        <FormKit
-          label="Cuotas de otros préstamos"
-          v-model="form_data.Ingresos_netos_one_two"
-          type="number"
-        />
+        <div class="mes_format_parent">
+          <p class="mes_format">€/Mes</p>
+          <FormKit
+            label="Ingresos netos"
+            v-model="form_data.Ingresos_netos_one"
+            type="text"
+          />
+        </div>
+        <div class="mes_format_parent">
+          <p class="mes_format">€/Mes</p>
+          <FormKit
+            label="Cuotas de otros préstamos"
+            v-model="form_data.Ingresos_netos_one_two"
+            type="text"
+          />
+        </div>
       </div>
       <div class="mt-5" v-if="form_data.select_form_qu == '2'">
         <div>
           <p>Solicitante 2</p>
+
           <FormKit
             v-model="form_data.address_select_2"
             type="select"
@@ -454,18 +460,24 @@ const formattedSavingAmount = computed(() => {
             ]"
           />
 
-          <FormKit
-            label="Ingresos netos"
-            name="Ingresos"
-            v-model="form_data.Ingresos_netos_two"
-            type="number"
-          />
-          <FormKit
-            label="Cuotas de otros préstamos"
-            name="Cuotas"
-            v-model="form_data.Ingresos_netos_two_two"
-            type="number"
-          />
+          <div class="mes_format_parent">
+            <p class="mes_format">€/Mes</p>
+            <FormKit
+              label="Ingresos netos"
+              name="Ingresos"
+              v-model="form_data.Ingresos_netos_two"
+              type="number"
+            />
+          </div>
+          <div class="mes_format_parent">
+            <p class="mes_format">€/Mes</p>
+            <FormKit
+              label="Cuotas de otros préstamos"
+              name="Cuotas"
+              v-model="form_data.Ingresos_netos_two_two"
+              type="number"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -652,14 +664,19 @@ const formattedSavingAmount = computed(() => {
     </template>
   </FormKit>
 
-  <p style="color: red">
-    <b>
-      {{ submit_msg }}
-    </b>
+  <p v-show="submit_msg != ''" class="success_msg">
+    {{ submit_msg }}
   </p>
 </template>
 
 <style scoped>
+.success_msg {
+  font-weight: bold;
+  text-align: center;
+  padding: 10px;
+  border: 1px solid gray;
+  margin-top: 10px;
+}
 #house_rate_format {
   display: block;
 }
@@ -672,9 +689,28 @@ const formattedSavingAmount = computed(() => {
 #house_rate_parent:hover #house_rate_format {
   display: none;
 }
+.mes_format_parent {
+  display: block;
+  position: relative;
+}
+.mes_format {
+  position: absolute;
+  right: 7%;
+  top: 50%;
+  font-weight: 600;
+  color: gray;
+}
 
 .saving_amount_format {
   display: block;
+  position: relative;
+}
+.saving_parcengate {
+  position: absolute;
+  right: 7%;
+  top: 30%;
+  font-weight: bold;
+  color: gray;
 }
 .saving_amount_not_format {
   display: none;
