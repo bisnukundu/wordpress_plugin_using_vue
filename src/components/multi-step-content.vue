@@ -54,6 +54,24 @@ const submit_form = async () => {
     console.error("AJAX request failed");
   }
 };
+
+const formattedHouseRate = computed(() => {
+  const formatter = new Intl.NumberFormat("es-ES", {
+    style: "currency",
+    currency: "EUR",
+    minimumFractionDigits: 0,
+  });
+  return formatter.format(form_data.house_rate);
+});
+
+const formattedSavingAmount = computed(() => {
+  const formatter = new Intl.NumberFormat("es-ES", {
+    style: "currency",
+    currency: "EUR",
+    minimumFractionDigits: 0,
+  });
+  return formatter.format(form_data.saving_amout);
+});
 </script>
 
 <template>
@@ -232,16 +250,29 @@ const submit_form = async () => {
   </FormKit>
 
   <FormKit type="step" name="2">
-    <FormKit
-      label="Ouål es el precio de tu vivienda?"
-      v-model="form_data.house_rate"
-      type="text"
-    />
+    <div id="house_rate_parent">
+      <div id="house_rate_format">
+        <FormKit
+          label="Ouål es el precio de tu vivienda?"
+          v-model="formattedHouseRate"
+          type="text"
+        />
+      </div>
+      <div id="houser_rate_not_format">
+        <FormKit
+          label="Ouål es el precio de tu vivienda?"
+          v-model="form_data.house_rate"
+          type="text"
+        />
+      </div>
+    </div>
+
     <input
       type="range"
       v-model="form_data.house_rate"
       id=""
       min="0"
+      step="10000"
       max="1000000"
     />
   </FormKit>
@@ -343,12 +374,22 @@ const submit_form = async () => {
     <h4>Sobre la hipoteca</h4>
     <p>Cuåntos ahorros vas a aportar?</p>
     <p>{{ computed_saving.toFixed() }}%</p>
-    <input v-model="form_data.saving_amout" type="text" />
+
+    <div class="saving_amount">
+      <div class="saving_amount_format">
+        <input type="text" :value="formattedSavingAmount" />
+      </div>
+      <div class="saving_amount_not_format">
+        <input v-model="form_data.saving_amout" type="text" />
+      </div>
+    </div>
+
     <input
       type="range"
       v-model="form_data.saving_amout"
       min="0"
       :max="form_data.house_rate"
+      step="5000"
     />
 
     <p>
@@ -619,6 +660,31 @@ const submit_form = async () => {
 </template>
 
 <style scoped>
+#house_rate_format {
+  display: block;
+}
+#houser_rate_not_format {
+  display: none;
+}
+#house_rate_parent:hover #houser_rate_not_format {
+  display: block;
+}
+#house_rate_parent:hover #house_rate_format {
+  display: none;
+}
+
+.saving_amount_format {
+  display: block;
+}
+.saving_amount_not_format {
+  display: none;
+}
+.saving_amount:hover .saving_amount_not_format {
+  display: block;
+}
+.saving_amount:hover .saving_amount_format {
+  display: none;
+}
 .mt-5 {
   margin-top: 50px;
 }
