@@ -170,76 +170,38 @@ const formattedSavingAmount = computed(() => {
     <h4>Vende tu casa en 60 dias</h4>
     <p>Te llamaremos para resolver todas tus dudas</p>
     <div class="formkit-wrapper" style="margin-bottom: 10px">
-      <GoogleAddressAutocomplete
-        :apiKey="api"
-        v-model="form_data.location"
-        class="formkit-input"
-        placeholder="🏠 Ciudad de la casa en venta"
-      />
+      <GoogleAddressAutocomplete :apiKey="api" v-model="form_data.location" class="formkit-input"
+        placeholder="🏠 Ciudad de la casa en venta" />
     </div>
     <div class="conainer">
       <div>
-        <FormKit
-          type="select"
-          name="Code"
-          v-model="form_data.country_code"
-          :options="country_code"
-        />
+        <FormKit :wrapper-class="{ 'select_css': true }" type="select" name="Code" classes=""
+          v-model="form_data.country_code" :options="country_code" />
       </div>
       <div>
-        <FormKit
-          placeholder="Enter Phone"
-          name="Phone"
-          v-model="form_data.phone"
-          type="tel"
-          validation="required"
-        />
+        <FormKit placeholder="Enter Phone" name="Phone" v-model="form_data.phone" type="tel" validation="required" />
       </div>
     </div>
-    <FormKit
-      type="checkbox"
-      label="Acepto la politica de privacidad"
-      :value="true"
-      validation="accepted"
-      validation-visibility="dirty"
-    />
+    <FormKit type="checkbox" label="Acepto la politica de privacidad" :value="true" validation="accepted"
+      validation-visibility="dirty" />
   </FormKit>
 
   <FormKit type="step" name="2">
     <div id="house_rate_parent">
       <div id="house_rate_format">
-        <FormKit
-          label="Ouål es el precio de tu vivienda?"
-          v-model="formattedHouseRate"
-          type="text"
-        />
+        <FormKit label="Ouål es el precio de tu vivienda?" v-model="formattedHouseRate" type="text" />
       </div>
       <div id="houser_rate_not_format">
-        <FormKit
-          label="Ouål es el precio de tu vivienda?"
-          v-model="form_data.house_rate"
-          type="text"
-        />
+        <FormKit label="Ouål es el precio de tu vivienda?" v-model="form_data.house_rate" type="text" />
       </div>
     </div>
 
-    <input
-      type="range"
-      v-model="form_data.house_rate"
-      id=""
-      min="0"
-      step="10000"
-      max="1000000"
-    />
+    <input type="range" v-model="form_data.house_rate" id="" min="0" step="10000" max="1000000" />
   </FormKit>
   <FormKit type="step" name="3">
     <h4>La mejor hipoteca para ti</h4>
-    <FormKit
-      v-model="form_data.house_location"
-      type="select"
-      label="Dönde estå ubicada la vivienda?"
-      name="House_Location"
-      :options="[
+    <FormKit v-model="form_data.house_location" type="select" label="Dönde estå ubicada la vivienda?"
+      name="House_Location" :options="[
         'Select House Location',
         'Madrid',
         'Palma de Mallorca',
@@ -293,38 +255,26 @@ const formattedSavingAmount = computed(() => {
         'Segovia',
         'Soria',
         'Teruel',
-      ]"
-    />
+      ]" />
   </FormKit>
   <FormKit type="step" name="4">
     <h4>Sobre la vivienda</h4>
-    <FormKit
-      v-model="form_data.purchase_type"
-      type="select"
-      label="Tipo de compra"
-      name="Purchase_type
+    <FormKit v-model="form_data.purchase_type" type="select" label="Tipo de compra" name="Purchase_type
  type
-"
-      :options="[
-        'Select Type',
-        'Primea Propiedad',
-        'Cambio de propiedad',
-        'Segunda propiedad',
-        'Inversion',
-      ]"
-    />
+" :options="[
+  'Select Type',
+  'Primea Propiedad',
+  'Cambio de propiedad',
+  'Segunda propiedad',
+  'Inversion',
+]" />
 
-    <FormKit
-      v-model="form_data.radio_one"
-      type="radio"
-      label="LCuåndo tienes previsto comprar?"
-      :options="[
-        'Ya la tengo reservada',
-        'Ya la he elegido',
-        'En menos de 3 meses',
-        'En mås de 3 meses',
-      ]"
-    />
+    <FormKit v-model="form_data.radio_one" type="radio" label="LCuåndo tienes previsto comprar?" :options="[
+      'Ya la tengo reservada',
+      'Ya la he elegido',
+      'En menos de 3 meses',
+      'En mås de 3 meses',
+    ]" />
   </FormKit>
   <FormKit type="step" name="5">
     <h4>Sobre la hipoteca</h4>
@@ -340,25 +290,14 @@ const formattedSavingAmount = computed(() => {
       </div>
     </div>
 
-    <input
-      type="range"
-      v-model="form_data.saving_amout"
-      min="0"
-      :max="form_data.house_rate"
-      step="5000"
-    />
+    <input type="range" v-model="form_data.saving_amout" min="0" :max="form_data.house_rate" step="5000" />
 
     <p>
       Vas a aportar un {{ computed_saving.toFixed() }}% del precio de la
       vivienda.
     </p>
     <div>
-      <FormKit
-        v-model="form_data.select_form_qu"
-        type="radio"
-        label="Nümero de solicitantes"
-        :options="[1, 2]"
-      />
+      <FormKit v-model="form_data.select_form_qu" type="radio" label="Nümero de solicitantes" :options="[1, 2]" />
     </div>
   </FormKit>
   <FormKit type="step" name="6">
@@ -366,46 +305,28 @@ const formattedSavingAmount = computed(() => {
       <div>
         <h4>Sobre los solicitantes</h4>
         <p>Solicitante 1</p>
-        <FormKit
-          v-model="form_data.address"
-          type="select"
-          label="Situaciön laboral"
-          name="address_four"
-          :options="[
-            'Select',
-            'Contrato fijo',
-            'Funcionario',
-            'Autönomo',
-            'Contrato Temporal',
-            'Otra',
-          ]"
-        />
+        <FormKit v-model="form_data.address" type="select" label="Situaciön laboral" name="address_four" :options="[
+          'Select',
+          'Contrato fijo',
+          'Funcionario',
+          'Autönomo',
+          'Contrato Temporal',
+          'Otra',
+        ]" />
         <div class="mes_format_parent">
           <p class="mes_format">€/Mes</p>
-          <FormKit
-            label="Ingresos netos"
-            v-model="form_data.Ingresos_netos_one"
-            type="text"
-          />
+          <FormKit label="Ingresos netos" v-model="form_data.Ingresos_netos_one" type="text" />
         </div>
         <div class="mes_format_parent">
           <p class="mes_format">€/Mes</p>
-          <FormKit
-            label="Cuotas de otros préstamos"
-            v-model="form_data.Ingresos_netos_one_two"
-            type="text"
-          />
+          <FormKit label="Cuotas de otros préstamos" v-model="form_data.Ingresos_netos_one_two" type="text" />
         </div>
       </div>
       <div class="mt-5" v-if="form_data.select_form_qu == '2'">
         <div>
           <p>Solicitante 2</p>
 
-          <FormKit
-            v-model="form_data.address_select_2"
-            type="select"
-            label="Situaciön laboral"
-            name="Address_three"
+          <FormKit v-model="form_data.address_select_2" type="select" label="Situaciön laboral" name="Address_three"
             :options="[
               'Select',
               'Contrato fijo',
@@ -413,75 +334,39 @@ const formattedSavingAmount = computed(() => {
               'Autönomo',
               'Contrato Temporal',
               'Otra',
-            ]"
-          />
+            ]" />
 
           <div class="mes_format_parent">
             <p class="mes_format">€/Mes</p>
-            <FormKit
-              label="Ingresos netos"
-              name="Ingresos"
-              v-model="form_data.Ingresos_netos_two"
-              type="number"
-            />
+            <FormKit label="Ingresos netos" name="Ingresos" v-model="form_data.Ingresos_netos_two" type="number" />
           </div>
           <div class="mes_format_parent">
             <p class="mes_format">€/Mes</p>
-            <FormKit
-              label="Cuotas de otros préstamos"
-              name="Cuotas"
-              v-model="form_data.Ingresos_netos_two_two"
-              type="number"
-            />
+            <FormKit label="Cuotas de otros préstamos" name="Cuotas" v-model="form_data.Ingresos_netos_two_two"
+              type="number" />
           </div>
         </div>
       </div>
     </div>
   </FormKit>
   <FormKit type="step" name="7">
-    <FormKit
-      v-model="form_data.name"
-      label="Name"
-      name="Name"
-      type="text"
-      validation="required"
-    />
-    <FormKit
-      v-model="form_data.email"
-      label="Email"
-      name="Email"
-      type="email"
-      validation="required"
-    />
+    <FormKit v-model="form_data.name" label="Name" name="Name" type="text" validation="required" />
+    <FormKit v-model="form_data.email" label="Email" name="Email" type="email" validation="required" />
 
     <div class="conainer">
       <div>
-        <FormKit
-          type="select"
-          v-model="form_data.country_code_two"
-          :options="country_code"
-        />
+        <FormKit :wrapper-class="{ 'select_css': true }" type="select" v-model="form_data.country_code_two"
+          :options="country_code" />
       </div>
       <div>
-        <FormKit
-          placeholder="Enter Phone"
-          type="tel"
-          name="Phone"
-          v-model="form_data.phone_two"
-          validation="required"
-        />
+        <FormKit placeholder="Enter Phone" type="tel" name="Phone" v-model="form_data.phone_two" validation="required" />
       </div>
     </div>
-    <FormKit
-      type="checkbox"
-      label="Acepto todos IOS tratamientos"
-      :value="true"
-      validation="accepted"
-      validation-visibility="dirty"
-    />
+    <FormKit type="checkbox" label="Acepto todos IOS tratamientos" :value="true" validation="accepted"
+      validation-visibility="dirty" />
 
     <template #stepNext>
-      <FormKit @click="submit_form" type="submit" label="Send" />
+      <FormKit @click="submit_form" :wrapper-class="{ 'submit_btn': true }" type="submit" label="Send" />
     </template>
   </FormKit>
 
@@ -490,7 +375,7 @@ const formattedSavingAmount = computed(() => {
   </p>
 </template>
 
-<style scoped>
+<style>
 .success_msg {
   font-weight: bold;
   text-align: center;
@@ -498,22 +383,28 @@ const formattedSavingAmount = computed(() => {
   border: 1px solid gray;
   margin-top: 10px;
 }
+
 #house_rate_format {
   display: block;
 }
+
 #houser_rate_not_format {
   display: none;
 }
+
 #house_rate_parent:hover #houser_rate_not_format {
   display: block;
 }
+
 #house_rate_parent:hover #house_rate_format {
   display: none;
 }
+
 .mes_format_parent {
   display: block;
   position: relative;
 }
+
 .mes_format {
   position: absolute;
   right: 7%;
@@ -526,6 +417,7 @@ const formattedSavingAmount = computed(() => {
   display: block;
   position: relative;
 }
+
 .saving_parcengate {
   position: absolute;
   right: 7%;
@@ -533,15 +425,19 @@ const formattedSavingAmount = computed(() => {
   font-weight: bold;
   color: gray;
 }
+
 .saving_amount_not_format {
   display: none;
 }
+
 .saving_amount:hover .saving_amount_not_format {
   display: block;
 }
+
 .saving_amount:hover .saving_amount_format {
   display: none;
 }
+
 .mt-5 {
   margin-top: 50px;
 }
@@ -603,4 +499,46 @@ input[type="range"]::-moz-range-progress {
   background-color: #4c9aff;
   border-radius: 5px;
 }
-</style>
+
+.formkit-outer[data-type=multi-step]>.formkit-wrapper>.formkit-steps {
+  border: none;
+  text-align: left;
+}
+
+.formkit-outer[data-type=multi-step]>[data-tab-style=progress]>.formkit-steps {
+  border: none;
+  box-shadow: none;
+  padding: 0px;
+}
+
+[data-type=button] .formkit-input,
+#input_32 {
+  background: #7bbf91;
+  color: var(--fk-color-button);
+}
+
+.formkit-wrapper.submit_btn button {
+  background: #7bbf91;
+}
+
+.formkit-wrapper.submit_btn button:hover {
+  background: #595959;
+}
+
+#input_32:hover {
+  background: #595959;
+}
+
+[data-type=button] .formkit-input:hover {
+  background: #595959;
+  color: var(--fk-color-button);
+}
+
+.formkit-outer[data-type=multi-step]>[data-tab-style=progress]>.formkit-tabs>.formkit-tab {
+  outline: none
+}
+
+.select_css div select {
+  height: 36px !important;
+  padding: 0px 15px;
+}</style>
