@@ -2,7 +2,7 @@
 import { ref, onMounted, computed, watch, reactive } from "vue";
 import GoogleAddressAutocomplete from "vue3-google-address-autocomplete";
 
-const api = "AIzaSyA3jPfYVnWS9hd5kiNpdnV6WVOBC-kVMqM";
+const api = "APIKEY";
 
 const form_data = reactive({
   house_rate: 100,
