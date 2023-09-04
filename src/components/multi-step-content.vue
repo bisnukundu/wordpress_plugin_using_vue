@@ -166,27 +166,7 @@ const formattedSavingAmount = computed(() => {
 </script>
 
 <template>
-  <FormKit type="step" name="1">
-    <h4>Vende tu casa en 60 dias</h4>
-    <p>Te llamaremos para resolver todas tus dudas</p>
-    <div class="formkit-wrapper" style="margin-bottom: 10px">
-      <GoogleAddressAutocomplete :apiKey="api" v-model="form_data.location" class="formkit-input"
-        placeholder="🏠 Ciudad de la casa en venta" />
-    </div>
-    <div class="conainer">
-      <div>
-        <FormKit :wrapper-class="{ 'select_css': true }" type="select" name="Code" classes=""
-          v-model="form_data.country_code" :options="country_code" />
-      </div>
-      <div>
-        <FormKit placeholder="Enter Phone" name="Phone" v-model="form_data.phone" type="tel" validation="required" />
-      </div>
-    </div>
-    <FormKit type="checkbox" label="Acepto la politica de privacidad" :value="true" validation="accepted"
-      validation-visibility="dirty" />
-  </FormKit>
-
-  <FormKit type="step" name="2">
+   <FormKit type="step" name="2">
     <div id="house_rate_parent">
       <div id="house_rate_format">
         <FormKit label="Ouål es el precio de tu vivienda?" v-model="formattedHouseRate" type="text" />
