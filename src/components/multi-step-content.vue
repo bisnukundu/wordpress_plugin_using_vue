@@ -550,11 +550,7 @@ input[type="range"]::-moz-range-progress {
   padding: 0px;
 }
 
-[data-type=button] .formkit-input,
-#input_32 {
-  background: #7bbf91;
-  color: var(--fk-color-button);
-}
+
 
 .formkit-wrapper.submit_btn button {
   background: #7bbf91;
@@ -564,8 +560,8 @@ input[type="range"]::-moz-range-progress {
   background: #595959;
 }
 
-#input_32:hover {
-  background: #595959;
+[data-type=button] .formkit-input {
+  background: #7bbf91;
 }
 
 [data-type=button] .formkit-input:hover {
@@ -580,4 +576,5 @@ input[type="range"]::-moz-range-progress {
 .select_css div select {
   height: 36px !important;
   padding: 0px 15px;
-}</style>
+}
+</style>
