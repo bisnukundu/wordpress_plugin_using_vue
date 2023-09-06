@@ -23,7 +23,6 @@ const form_data = reactive({
   phone_two: "",
   country_code: "+34 Spain",
   country_code_two: "+34 Spain",
-  location: "",
   saving_parcentage: "",
 });
 const submit_msg = ref("");
