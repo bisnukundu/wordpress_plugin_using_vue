@@ -1,19 +1,18 @@
 <script setup>
 import { ref, onMounted, computed, watch, reactive } from "vue";
-import GoogleAddressAutocomplete from "vue3-google-address-autocomplete";
 
 const api = "APIKEY";
 
 const form_data = reactive({
-  house_rate: 100,
+  house_rate: 100000,
   address: "",
   address_select_2: "",
   house_location: "",
   purchase_type: "",
-  saving_amout: 5000,
+  saving_amout: 20000,
   saving_calculate: "",
-  radio_one: "",
-  select_form_qu: 0,
+  radio_one: "Ya la tengo reservada.",
+  select_form_qu: 1,
   Ingresos_netos_one: "",
   Ingresos_netos_one_two: "",
   Ingresos_netos_two: "",
@@ -22,15 +21,14 @@ const form_data = reactive({
   email: "",
   phone: "",
   phone_two: "",
-  country_code: "",
-  country_code_two: "",
+  country_code: "+34 Spain",
+  country_code_two: "+34 Spain",
   location: "",
   saving_parcentage: "",
 });
 const submit_msg = ref("");
 const country_code = [
-  "Select Code",
-  "+34 Spain ",
+  "+34 Spain",
   "+93 Afghanistan ",
   "+355 Albania ",
   "+213 Algeria ",
@@ -163,24 +161,34 @@ const formattedSavingAmount = computed(() => {
   });
   return formatter.format(form_data.saving_amout);
 });
+
+const closeMsg = () => {
+  submit_msg.value = ''
+}
 </script>
 
 <template>
-   <FormKit type="step" name="2">
+  <!-- 1 Step  -->
+  <FormKit type="step" name="2">
     <div id="house_rate_parent">
       <div id="house_rate_format">
-        <FormKit label="Ouål es el precio de tu vivienda?" v-model="formattedHouseRate" type="text" />
+        <FormKit label="¿Cuál es el precio de tu nuevo hogar?" v-model="formattedHouseRate" type="text" />
       </div>
       <div id="houser_rate_not_format">
-        <FormKit label="Ouål es el precio de tu vivienda?" v-model="form_data.house_rate" type="text" />
+        <FormKit label="¿Cuál es el precio de tu nuevo hogar?" v-model="form_data.house_rate" type="text" />
       </div>
     </div>
 
     <input type="range" v-model="form_data.house_rate" id="" min="0" step="10000" max="1000000" />
+    <!-- Custom Text in Next Button  -->
+    <template #stepNext="{ handlers, node }">
+      <FormKit type="button" @click="handlers.incrementStep(1)()" label="Siguiente" data-next="true" />
+    </template>
   </FormKit>
+  <!-- 2 Step  -->
   <FormKit type="step" name="3">
-    <h4>La mejor hipoteca para ti</h4>
-    <FormKit v-model="form_data.house_location" type="select" label="Dönde estå ubicada la vivienda?"
+    <h4>Consigue la mejor hipoteca</h4>
+    <FormKit validation="required" v-model="form_data.house_location" type="select" label="¿Dónde está la vivienda?"
       name="House_Location" :options="[
         'Select House Location',
         'Madrid',
@@ -236,10 +244,20 @@ const formattedSavingAmount = computed(() => {
         'Soria',
         'Teruel',
       ]" />
+    <!-- Custom Text in Next Button  -->
+    <template #stepNext="{ handlers, node }">
+      <FormKit type="button" @click="handlers.incrementStep(1)()" label="Siguiente" data-next="true" />
+    </template>
+    <!-- Custom Text in Previous Button  -->
+    <template #stepPrevious="{ handlers, node }">
+      <FormKit type="button" @click="handlers.incrementStep(-1)()" label="Atrás" />
+    </template>
   </FormKit>
+
+  <!-- 3 Step  -->
   <FormKit type="step" name="4">
-    <h4>Sobre la vivienda</h4>
-    <FormKit v-model="form_data.purchase_type" type="select" label="Tipo de compra" name="Purchase_type
+    <h4>Sobre tu nuevo hogar</h4>
+    <FormKit validation="required" v-model="form_data.purchase_type" type="select" label="Tipo de compra" name="Purchase_type
  type
 " :options="[
   'Select Type',
@@ -249,16 +267,27 @@ const formattedSavingAmount = computed(() => {
   'Inversion',
 ]" />
 
-    <FormKit v-model="form_data.radio_one" type="radio" label="LCuåndo tienes previsto comprar?" :options="[
-      'Ya la tengo reservada',
-      'Ya la he elegido',
-      'En menos de 3 meses',
-      'En mås de 3 meses',
-    ]" />
+    <FormKit v-model="form_data.radio_one" validation="required" type="radio" label="¿cuándo Genes previsto comprar?"
+      :options="[
+        'Ya la tengo reservada.',
+        'Ya la he escogido.',
+        'En menos de tres meses.',
+        'En más de tres meses.',
+      ]" />
+    <!-- Custom Text in Next Button  -->
+    <template #stepNext="{ handlers, node }">
+      <FormKit type="button" @click="handlers.incrementStep(1)()" label="Siguiente" data-next="true" />
+    </template>
+    <!-- Custom Text in Previous Button  -->
+    <template #stepPrevious="{ handlers, node }">
+      <FormKit type="button" @click="handlers.incrementStep(-1)()" label="Atrás" />
+    </template>
   </FormKit>
+
+  <!-- 4 Step  -->
   <FormKit type="step" name="5">
     <h4>Sobre la hipoteca</h4>
-    <p>Cuåntos ahorros vas a aportar?</p>
+    <p>¿cuántos ahorros aportas?</p>
 
     <div class="saving_amount">
       <div class="saving_amount_format">
@@ -277,37 +306,50 @@ const formattedSavingAmount = computed(() => {
       vivienda.
     </p>
     <div>
-      <FormKit v-model="form_data.select_form_qu" type="radio" label="Nümero de solicitantes" :options="[1, 2]" />
+      <FormKit validation="required" v-model="form_data.select_form_qu" type="radio" label="Número de compradores."
+        :options="[1, 2]" />
     </div>
+    <!-- Custom Text in Next Button  -->
+    <template #stepNext="{ handlers, node }">
+      <FormKit type="button" @click="handlers.incrementStep(1)()" label="Siguiente" data-next="true" />
+    </template>
+    <!-- Custom Text in Previous Button  -->
+    <template #stepPrevious="{ handlers, node }">
+      <FormKit type="button" @click="handlers.incrementStep(-1)()" label="Atrás" />
+    </template>
   </FormKit>
+
+  <!-- 5 Step  -->
   <FormKit type="step" name="6">
     <div>
       <div>
-        <h4>Sobre los solicitantes</h4>
-        <p>Solicitante 1</p>
-        <FormKit v-model="form_data.address" type="select" label="Situaciön laboral" name="address_four" :options="[
-          'Select',
-          'Contrato fijo',
-          'Funcionario',
-          'Autönomo',
-          'Contrato Temporal',
-          'Otra',
-        ]" />
+        <h4>Sobre los compradores</h4>
+        <p>Comprador 1</p>
+        <FormKit v-model="form_data.address" validation="required" type="select" label="Situación Laboral"
+          name="address_four" :options="[
+            'Select',
+            'Contrato fijo',
+            'Funcionario',
+            'Autönomo',
+            'Contrato Temporal',
+            'Otra',
+          ]" />
         <div class="mes_format_parent">
           <p class="mes_format">€/Mes</p>
-          <FormKit label="Ingresos netos" v-model="form_data.Ingresos_netos_one" type="text" />
+          <FormKit validation="required" label="Ingresos netos" v-model="form_data.Ingresos_netos_one" type="text" />
         </div>
         <div class="mes_format_parent">
           <p class="mes_format">€/Mes</p>
-          <FormKit label="Cuotas de otros préstamos" v-model="form_data.Ingresos_netos_one_two" type="text" />
+          <FormKit validation="required" label="Cuotas de otros préstamos" v-model="form_data.Ingresos_netos_one_two"
+            type="text" />
         </div>
       </div>
       <div class="mt-5" v-if="form_data.select_form_qu == '2'">
         <div>
-          <p>Solicitante 2</p>
+          <p>Comprador 2</p>
 
-          <FormKit v-model="form_data.address_select_2" type="select" label="Situaciön laboral" name="Address_three"
-            :options="[
+          <FormKit validation="required" v-model="form_data.address_select_2" type="select" label="Situación Laboral"
+            name="Address_three" :options="[
               'Select',
               'Contrato fijo',
               'Funcionario',
@@ -318,20 +360,33 @@ const formattedSavingAmount = computed(() => {
 
           <div class="mes_format_parent">
             <p class="mes_format">€/Mes</p>
-            <FormKit label="Ingresos netos" name="Ingresos" v-model="form_data.Ingresos_netos_two" type="number" />
+            <FormKit validation="required" label="Ingresos netos" name="Ingresos" v-model="form_data.Ingresos_netos_two"
+              type="number" />
           </div>
           <div class="mes_format_parent">
             <p class="mes_format">€/Mes</p>
-            <FormKit label="Cuotas de otros préstamos" name="Cuotas" v-model="form_data.Ingresos_netos_two_two"
-              type="number" />
+            <FormKit validation="required" label="Cuotas de otros préstamos" name="Cuotas"
+              v-model="form_data.Ingresos_netos_two_two" type="number" />
           </div>
         </div>
       </div>
     </div>
+    <!-- Custom Text in Next Button  -->
+    <template #stepNext="{ handlers, node }">
+      <FormKit type="button" @click="handlers.incrementStep(1)()" label="Siguiente" data-next="true" />
+    </template>
+    <!-- Custom Text in Previous Button  -->
+    <template #stepPrevious="{ handlers, node }">
+      <FormKit type="button" @click="handlers.incrementStep(-1)()" label="Atrás" />
+    </template>
   </FormKit>
+
+  <!-- 6 Step  -->
   <FormKit type="step" name="7">
-    <FormKit v-model="form_data.name" label="Name" name="Name" type="text" validation="required" />
-    <FormKit v-model="form_data.email" label="Email" name="Email" type="email" validation="required" />
+    <FormKit v-model="form_data.name" placeholder="Nombre..." label="Nombre" name="Name" type="text"
+      validation="required" />
+    <FormKit v-model="form_data.email" placeholder="Example@gmail.com" label="Email" name="Email" type="email"
+      validation="required" />
 
     <div class="conainer">
       <div>
@@ -339,18 +394,23 @@ const formattedSavingAmount = computed(() => {
           :options="country_code" />
       </div>
       <div>
-        <FormKit placeholder="Enter Phone" type="tel" name="Phone" v-model="form_data.phone_two" validation="required" />
+        <FormKit placeholder="Teléfono" type="tel" name="Phone" v-model="form_data.phone_two" validation="required" />
       </div>
     </div>
-    <FormKit type="checkbox" label="Acepto todos IOS tratamientos" :value="true" validation="accepted"
+    <FormKit type="checkbox" label="Acepto las políGcas de privacidad y cookies." :value="true" validation="accepted"
       validation-visibility="dirty" />
 
     <template #stepNext>
-      <FormKit @click="submit_form" :wrapper-class="{ 'submit_btn': true }" type="submit" label="Send" />
+      <FormKit @click="submit_form" :wrapper-class="{ 'submit_btn': true }" type="submit" label="Enviar" />
+    </template>
+
+    <!-- Custom Text in Previous Button  -->
+    <template #stepPrevious="{ handlers, node }">
+      <FormKit type="button" @click="handlers.incrementStep(-1)()" label="Atrás" />
     </template>
   </FormKit>
 
-  <p v-show="submit_msg != ''" class="success_msg">
+  <p @click="closeMsg" v-show="submit_msg != ''" class="success_msg">
     {{ submit_msg }}
   </p>
 </template>
