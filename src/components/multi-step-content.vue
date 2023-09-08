@@ -21,13 +21,13 @@ const form_data = reactive({
   email: "",
   phone: "",
   phone_two: "",
-  country_code: "+34 Spain",
-  country_code_two: "+34 Spain",
+  country_code: "+34 España",
+  country_code_two: "+34 España",
   saving_parcentage: "",
 });
 const submit_msg = ref("");
 const country_code = [
-  "+34 Spain",
+  "+34 España",
   "+93 Afghanistan ",
   "+355 Albania ",
   "+213 Algeria ",
@@ -189,7 +189,7 @@ const closeMsg = () => {
     <h4>Consigue la mejor hipoteca</h4>
     <FormKit validation="required" v-model="form_data.house_location" type="select" label="¿Dónde está la vivienda?"
       name="House_Location" :options="[
-        'Select House Location',
+        'Selecciona tu ubicación',
         'Madrid',
         'Palma de Mallorca',
         'Las Palmas de Gran Canaria',
@@ -259,11 +259,11 @@ const closeMsg = () => {
     <FormKit validation="required" v-model="form_data.purchase_type" type="select" label="Tipo de compra" name="Purchase_type
  type
 " :options="[
-  'Select Type',
-  'Primea Propiedad',
-  'Cambio de propiedad',
-  'Segunda propiedad',
-  'Inversion',
+  'Selecciona',
+  'Primera residencia.',
+  'Cambio de propiedad.',
+  'Segunda residencia.',
+  'Inversión.',
 ]" />
 
     <FormKit v-model="form_data.radio_one" validation="required" type="radio" label="¿cuándo Genes previsto comprar?"
@@ -326,12 +326,13 @@ const closeMsg = () => {
         <p>Comprador 1</p>
         <FormKit v-model="form_data.address" validation="required" type="select" label="Situación Laboral"
           name="address_four" :options="[
-            'Select',
-            'Contrato fijo',
-            'Funcionario',
-            'Autönomo',
-            'Contrato Temporal',
-            'Otra',
+             'Selecciona',
+              'Contrato fijo',
+              'Funcionario',
+              'Autónomo',
+              'Contrato temporal',
+              'Pensionista',
+              'Otro',
           ]" />
         <div class="mes_format_parent">
           <p class="mes_format">€/Mes</p>
@@ -339,7 +340,7 @@ const closeMsg = () => {
         </div>
         <div class="mes_format_parent">
           <p class="mes_format">€/Mes</p>
-          <FormKit validation="required" label="Cuotas de otros préstamos" v-model="form_data.Ingresos_netos_one_two"
+          <FormKit label="Cuotas de otros préstamos" v-model="form_data.Ingresos_netos_one_two"
             type="text" />
         </div>
       </div>
@@ -349,12 +350,13 @@ const closeMsg = () => {
 
           <FormKit validation="required" v-model="form_data.address_select_2" type="select" label="Situación Laboral"
             name="Address_three" :options="[
-              'Select',
+              'Selecciona',
               'Contrato fijo',
               'Funcionario',
-              'Autönomo',
-              'Contrato Temporal',
-              'Otra',
+              'Autónomo',
+              'Contrato temporal',
+              'Pensionista',
+              'Otro',
             ]" />
 
           <div class="mes_format_parent">
@@ -364,7 +366,7 @@ const closeMsg = () => {
           </div>
           <div class="mes_format_parent">
             <p class="mes_format">€/Mes</p>
-            <FormKit validation="required" label="Cuotas de otros préstamos" name="Cuotas"
+            <FormKit label="Cuotas de otros préstamos" name="Cuotas"
               v-model="form_data.Ingresos_netos_two_two" type="number" />
           </div>
         </div>
