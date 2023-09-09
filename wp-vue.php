@@ -35,9 +35,9 @@ class WPVue
     {
         $pluginUrl = plugin_dir_url(__FILE__);
 
-        wp_enqueue_script('wp-vue-core', '//localhost:5173/src/main.js', [], time(), true);
-        // wp_enqueue_script( 'wp-vue-core', plugin_dir_url( __FILE__ ) . '/dist/assets/index-99a191f3.js', [], time(), true );
-        // wp_enqueue_style( 'wp-vue-core', plugin_dir_url( __FILE__ ) . '/dist/assets/index-4f8ce9ce.css', [], time() );
+         wp_enqueue_script('wp-vue-core', '//localhost:5173/src/main.js', [], time(), true);
+//        wp_enqueue_script('wp-vue-core', $pluginUrl . '/dist/assets/index-d905e9ea.js', [], time(), true);
+//        wp_enqueue_style('wp-vue-core', $pluginUrl . '/dist/assets/index-53658622.css', [], time());
         wp_localize_script('wp-vue-core', 'wpvue', [
             'url' => $pluginUrl,
         ]);

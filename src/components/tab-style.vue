@@ -7,6 +7,6 @@ import MultiStepContent from './multi-step-content.vue';
 
 <template>
     <FormKit type="multi-step" tab-style="progress" :allow-incomplete="false">
-    <MultiStepContent />
-</FormKit>
+        <MultiStepContent />
+    </FormKit>
 </template>

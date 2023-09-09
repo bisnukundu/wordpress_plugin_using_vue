@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, computed, watch, reactive } from "vue";
+import {ref, onMounted, computed, watch, reactive} from "vue";
 
 const api = "APIKEY";
 
@@ -25,7 +25,10 @@ const form_data = reactive({
   country_code_two: "+34 España",
   saving_parcentage: "",
 });
+
+
 const submit_msg = ref("");
+
 const country_code = [
   "+34 España",
   "+93 Afghanistan ",
@@ -136,11 +139,16 @@ const submit_form = async () => {
 
   if (response.ok) {
     const data = await response.json(); // Parse response as JSON
-    console.log(data);
-    submit_msg.value = "Email Sent Succes";
+    submit_msg.value = "¡Formulario completado con éxito!";
+
+    setTimeout(() => {
+      submit_msg.value = ''
+    }, 4000)
+
   } else {
     console.error("AJAX request failed");
   }
+
 };
 
 const formattedHouseRate = computed(() => {
@@ -171,24 +179,24 @@ const closeMsg = () => {
   <FormKit type="step" name="2">
     <div id="house_rate_parent">
       <div id="house_rate_format">
-        <FormKit label="¿Cuál es el precio de tu nuevo hogar?" v-model="formattedHouseRate" type="text" />
+        <FormKit label="¿Cuál es el precio de tu nuevo hogar?" v-model="formattedHouseRate" type="text"/>
       </div>
       <div id="houser_rate_not_format">
-        <FormKit label="¿Cuál es el precio de tu nuevo hogar?" v-model="form_data.house_rate" type="text" />
+        <FormKit label="¿Cuál es el precio de tu nuevo hogar?" v-model="form_data.house_rate" type="text"/>
       </div>
     </div>
 
-    <input type="range" v-model="form_data.house_rate" id="" min="0" step="10000" max="1000000" />
+    <input type="range" v-model="form_data.house_rate" id="" min="0" step="10000" max="1000000"/>
     <!-- Custom Text in Next Button  -->
     <template #stepNext="{ handlers, node }">
-      <FormKit type="button" @click="handlers.incrementStep(1)()" label="Siguiente" data-next="true" />
+      <FormKit type="button" @click="handlers.incrementStep(1)()" label="Siguiente" data-next="true"/>
     </template>
   </FormKit>
   <!-- 2 Step  -->
   <FormKit type="step" name="3">
     <h4>Consigue la mejor hipoteca</h4>
     <FormKit validation="required" v-model="form_data.house_location" type="select" label="¿Dónde está la vivienda?"
-      name="House_Location" :options="[
+             name="House_Location" :options="[
         'Selecciona tu ubicación',
         'Madrid',
         'Palma de Mallorca',
@@ -242,14 +250,14 @@ const closeMsg = () => {
         'Segovia',
         'Soria',
         'Teruel',
-      ]" />
+      ]"/>
     <!-- Custom Text in Next Button  -->
     <template #stepNext="{ handlers, node }">
-      <FormKit type="button" @click="handlers.incrementStep(1)()" label="Siguiente" data-next="true" />
+      <FormKit type="button" @click="handlers.incrementStep(1)()" label="Siguiente" data-next="true"/>
     </template>
     <!-- Custom Text in Previous Button  -->
     <template #stepPrevious="{ handlers, node }">
-      <FormKit type="button" @click="handlers.incrementStep(-1)()" label="Atrás" />
+      <FormKit type="button" @click="handlers.incrementStep(-1)()" label="Atrás"/>
     </template>
   </FormKit>
 
@@ -264,22 +272,22 @@ const closeMsg = () => {
   'Cambio de propiedad.',
   'Segunda residencia.',
   'Inversión.',
-]" />
+]"/>
 
     <FormKit v-model="form_data.radio_one" validation="required" type="radio" label="¿cuándo Genes previsto comprar?"
-      :options="[
+             :options="[
         'Ya la tengo reservada.',
         'Ya la he escogido.',
         'En menos de tres meses.',
         'En más de tres meses.',
-      ]" />
+      ]"/>
     <!-- Custom Text in Next Button  -->
     <template #stepNext="{ handlers, node }">
-      <FormKit type="button" @click="handlers.incrementStep(1)()" label="Siguiente" data-next="true" />
+      <FormKit type="button" @click="handlers.incrementStep(1)()" label="Siguiente" data-next="true"/>
     </template>
     <!-- Custom Text in Previous Button  -->
     <template #stepPrevious="{ handlers, node }">
-      <FormKit type="button" @click="handlers.incrementStep(-1)()" label="Atrás" />
+      <FormKit type="button" @click="handlers.incrementStep(-1)()" label="Atrás"/>
     </template>
   </FormKit>
 
@@ -291,14 +299,14 @@ const closeMsg = () => {
     <div class="saving_amount">
       <div class="saving_amount_format">
         <p class="saving_parcengate">{{ computed_saving.toFixed() }}%</p>
-        <input type="text" :value="formattedSavingAmount" />
+        <input type="text" :value="formattedSavingAmount"/>
       </div>
       <div class="saving_amount_not_format">
-        <input v-model="form_data.saving_amout" type="text" />
+        <input v-model="form_data.saving_amout" type="text"/>
       </div>
     </div>
 
-    <input type="range" v-model="form_data.saving_amout" min="0" :max="form_data.house_rate" step="5000" />
+    <input type="range" v-model="form_data.saving_amout" min="0" :max="form_data.house_rate" step="5000"/>
 
     <p>
       Vas a aportar un {{ computed_saving.toFixed() }}% del precio de la
@@ -306,15 +314,15 @@ const closeMsg = () => {
     </p>
     <div>
       <FormKit validation="required" v-model="form_data.select_form_qu" type="radio" label="Número de compradores."
-        :options="[1, 2]" />
+               :options="[1, 2]"/>
     </div>
     <!-- Custom Text in Next Button  -->
     <template #stepNext="{ handlers, node }">
-      <FormKit type="button" @click="handlers.incrementStep(1)()" label="Siguiente" data-next="true" />
+      <FormKit type="button" @click="handlers.incrementStep(1)()" label="Siguiente" data-next="true"/>
     </template>
     <!-- Custom Text in Previous Button  -->
     <template #stepPrevious="{ handlers, node }">
-      <FormKit type="button" @click="handlers.incrementStep(-1)()" label="Atrás" />
+      <FormKit type="button" @click="handlers.incrementStep(-1)()" label="Atrás"/>
     </template>
   </FormKit>
 
@@ -325,23 +333,22 @@ const closeMsg = () => {
         <h4>Sobre los compradores</h4>
         <p>Comprador 1</p>
         <FormKit v-model="form_data.address" validation="required" type="select" label="Situación Laboral"
-          name="address_four" :options="[
-             'Selecciona',
-              'Contrato fijo',
-              'Funcionario',
-              'Autónomo',
-              'Contrato temporal',
-              'Pensionista',
-              'Otro',
-          ]" />
+                 name="address_four" :options="[
+            'Selecciona',
+            'Contrato fijo',
+            'Funcionario',
+            'Autónomo',
+            'Contrato temporal',
+            'Pensionista',
+            'Otro',
+          ]"/>
         <div class="mes_format_parent">
           <p class="mes_format">€/Mes</p>
-          <FormKit validation="required" label="Ingresos netos" v-model="form_data.Ingresos_netos_one" type="text" />
+          <FormKit validation="required" label="Ingresos netos" v-model="form_data.Ingresos_netos_one" type="text"/>
         </div>
         <div class="mes_format_parent">
           <p class="mes_format">€/Mes</p>
-          <FormKit label="Cuotas de otros préstamos" v-model="form_data.Ingresos_netos_one_two"
-            type="text" />
+          <FormKit label="Cuotas de otros préstamos" v-model="form_data.Ingresos_netos_one_two" type="text"/>
         </div>
       </div>
       <div class="mt-5" v-if="form_data.select_form_qu == '2'">
@@ -349,7 +356,7 @@ const closeMsg = () => {
           <p>Comprador 2</p>
 
           <FormKit validation="required" v-model="form_data.address_select_2" type="select" label="Situación Laboral"
-            name="Address_three" :options="[
+                   name="Address_three" :options="[
               'Selecciona',
               'Contrato fijo',
               'Funcionario',
@@ -357,59 +364,59 @@ const closeMsg = () => {
               'Contrato temporal',
               'Pensionista',
               'Otro',
-            ]" />
+            ]"/>
 
           <div class="mes_format_parent">
             <p class="mes_format">€/Mes</p>
             <FormKit validation="required" label="Ingresos netos" name="Ingresos" v-model="form_data.Ingresos_netos_two"
-              type="number" />
+                     type="number"/>
           </div>
           <div class="mes_format_parent">
             <p class="mes_format">€/Mes</p>
-            <FormKit label="Cuotas de otros préstamos" name="Cuotas"
-              v-model="form_data.Ingresos_netos_two_two" type="number" />
+            <FormKit label="Cuotas de otros préstamos" name="Cuotas" v-model="form_data.Ingresos_netos_two_two"
+                     type="number"/>
           </div>
         </div>
       </div>
     </div>
     <!-- Custom Text in Next Button  -->
     <template #stepNext="{ handlers, node }">
-      <FormKit type="button" @click="handlers.incrementStep(1)()" label="Siguiente" data-next="true" />
+      <FormKit type="button" @click="handlers.incrementStep(1)()" label="Siguiente" data-next="true"/>
     </template>
     <!-- Custom Text in Previous Button  -->
     <template #stepPrevious="{ handlers, node }">
-      <FormKit type="button" @click="handlers.incrementStep(-1)()" label="Atrás" />
+      <FormKit type="button" @click="handlers.incrementStep(-1)()" label="Atrás"/>
     </template>
   </FormKit>
 
   <!-- 6 Step  -->
   <FormKit type="step" name="7">
     <FormKit v-model="form_data.name" placeholder="Nombre..." label="Nombre" name="Name" type="text"
-      validation="required" />
+             validation="required"/>
     <FormKit v-model="form_data.email" placeholder="Example@gmail.com" label="Email" name="Email" type="email"
-      validation="required" />
+             validation="required"/>
 
     <div class="conainer">
       <div>
         <FormKit :wrapper-class="{ 'select_css': true }" type="select" v-model="form_data.country_code_two"
-          :options="country_code" />
+                 :options="country_code"/>
       </div>
       <div>
-        <FormKit placeholder="Teléfono" type="tel" name="Phone" v-model="form_data.phone_two" validation="required" />
+        <FormKit placeholder="Teléfono" type="tel" name="Phone" v-model="form_data.phone_two" validation="required"/>
       </div>
     </div>
-    <FormKit type="checkbox" label="Acepto las políGcas de privacidad y cookies." :value="true" validation="accepted"
-      validation-visibility="dirty" />
+    <FormKit type="checkbox" label="Acepto las políticas de privacidad y cookies." :value="true" validation="accepted"
+             validation-visibility="dirty"/>
 
     <template #stepNext>
-      <FormKit @click="submit_form" :wrapper-class="{ 'submit_btn': true }" type="submit" label="Enviar" />
+      <FormKit @click="submit_form" :wrapper-class="{ 'submit_btn': true }" type="submit" label="Enviar"/>
     </template>
-
     <!-- Custom Text in Previous Button  -->
     <template #stepPrevious="{ handlers, node }">
-      <FormKit type="button" @click="handlers.incrementStep(-1)()" label="Atrás" />
+      <FormKit type="button" @click="handlers.incrementStep(-1)()" label="Atrás"/>
     </template>
   </FormKit>
+
 
   <p @click="closeMsg" v-show="submit_msg != ''" class="success_msg">
     {{ submit_msg }}
@@ -417,12 +424,18 @@ const closeMsg = () => {
 </template>
 
 <style>
+.recaptcha {
+  display: flex;
+}
+
 .success_msg {
   font-weight: bold;
   text-align: center;
   padding: 10px;
   border: 1px solid gray;
   margin-top: 10px;
+  color: green;
+  border-radius: 10px;
 }
 
 #house_rate_format {
@@ -541,17 +554,16 @@ input[type="range"]::-moz-range-progress {
   border-radius: 5px;
 }
 
-.formkit-outer[data-type=multi-step]>.formkit-wrapper>.formkit-steps {
+.formkit-outer[data-type=multi-step] > .formkit-wrapper > .formkit-steps {
   border: none;
   text-align: left;
 }
 
-.formkit-outer[data-type=multi-step]>[data-tab-style=progress]>.formkit-steps {
+.formkit-outer[data-type=multi-step] > [data-tab-style=progress] > .formkit-steps {
   border: none;
   box-shadow: none;
   padding: 0px;
 }
-
 
 
 .formkit-wrapper.submit_btn button {
@@ -571,7 +583,7 @@ input[type="range"]::-moz-range-progress {
   color: var(--fk-color-button);
 }
 
-.formkit-outer[data-type=multi-step]>[data-tab-style=progress]>.formkit-tabs>.formkit-tab {
+.formkit-outer[data-type=multi-step] > [data-tab-style=progress] > .formkit-tabs > .formkit-tab {
   outline: none
 }
 
