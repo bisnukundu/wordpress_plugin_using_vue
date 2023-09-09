@@ -25,7 +25,9 @@ const form_data = reactive({
   country_code_two: "+34 España",
   saving_parcentage: "",
 });
+const sumit_btn_text = ref('Enviar');
 
+const submit_form_check = ref(false)
 
 const submit_msg = ref("");
 
@@ -125,6 +127,7 @@ const computed_saving = computed(() => {
 });
 
 const submit_form = async () => {
+  after_submit();
   form_data.saving_parcentage = computed_saving.value.toFixed() + "%";
   const response = await fetch("/wp-admin/admin-ajax.php", {
     method: "POST",
@@ -140,7 +143,6 @@ const submit_form = async () => {
   if (response.ok) {
     const data = await response.json(); // Parse response as JSON
     submit_msg.value = "¡Formulario completado con éxito!";
-
     setTimeout(() => {
       submit_msg.value = ''
     }, 4000)
@@ -150,6 +152,16 @@ const submit_form = async () => {
   }
 
 };
+const after_submit = () => {
+  submit_form_check.value = true
+  sumit_btn_text.value = "Enviada ✅"
+
+  setTimeout(function () {
+    sumit_btn_text.value = "Enviar"
+    submit_form_check.value = false
+  }, 6000)
+
+}
 
 const formattedHouseRate = computed(() => {
   const formatter = new Intl.NumberFormat("es-ES", {
@@ -408,8 +420,11 @@ const closeMsg = () => {
     <FormKit type="checkbox" label="Acepto las políticas de privacidad y cookies." :value="true" validation="accepted"
              validation-visibility="dirty"/>
 
+
     <template #stepNext>
-      <FormKit @click="submit_form" :wrapper-class="{ 'submit_btn': true }" type="submit" label="Enviar"/>
+      <FormKit :disabled="submit_form_check" @click="submit_form"
+               :wrapper-class="{ 'submit_btn': true }" type="submit"
+               :label="sumit_btn_text"/>
     </template>
     <!-- Custom Text in Previous Button  -->
     <template #stepPrevious="{ handlers, node }">
